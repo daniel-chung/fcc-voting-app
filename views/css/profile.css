@@ -1,0 +1,64 @@
+body {
+  margin-bottom: 50px;
+}
+
+.jumbotron {
+  margin-top: -25px;
+  background-color: #D9F5FF;
+  color: #777;
+}
+
+.poll-header {
+  color: #777;
+  border: 3px solid #90DAFF;
+  background-color: #D9F5FF;
+}
+
+.inner-div {
+  width: 50%;
+  margin: 0 auto;
+}
+
+.center-text {
+  text-align: center;
+}
+
+.outer {
+  width: 100%;
+  text-align: center;
+}
+.polls {
+  color: #777;
+  border: 3px solid #90DAFF;
+  border-radius: 5px;
+  margin: 0 auto;
+  padding: 5px;
+  height: 50px;
+}
+
+.poll-name {
+  height: 50px;
+  padding: 7px;
+  float: left;
+}
+
+.btn-show, .btn-delete {
+  float: right;
+  border-color: #90DAFF;
+  color: #777;
+}
+.btn-new-poll {
+  border-color: #90DAFF;
+  color: #777;
+}
+
+.btn-show:hover, .btn-delete:hover, .btn-new-poll:hover {
+  background-color: #90DAFF;
+  border-color: #90DAFF;
+}
+.btn-delete {
+  margin-left: 5px;
+}
+.btn-show {
+  position: relative;
+}

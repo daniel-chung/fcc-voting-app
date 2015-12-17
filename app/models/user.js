@@ -27,8 +27,9 @@ var userSchema = mongoose.Schema({
         token        : String,
         email        : String,
         name         : String
-    }
-
+    },
+    polls : Number,
+    maxPolls: Number
 });
 
 // methods ======================

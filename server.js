@@ -14,7 +14,9 @@ var cookieParser = require('cookie-parser');
 var bodyParser   = require('body-parser');
 var session      = require('express-session');
 
-var configDB = require('./config/database.js');
+//var configDB = require('./config/database.js');
+
+var router = express.Router();
 
 require('dotenv').load();
 
@@ -27,7 +29,9 @@ require('./config/passport')(passport); // pass passport for configuration
 // set up our express application
 app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
-app.use(bodyParser()); // get information from html forms
+app.use(bodyParser.urlencoded({
+  extended: true
+}));
 
 app.set('view engine', 'ejs'); // set up ejs for templating
 
@@ -37,9 +41,21 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
+// Config route
+app.use('/config', express.static(process.cwd() + '/config'));
+app.use('/bootstrap', express.static(process.cwd() + '/bootstrap'));
+app.use('/fontawesome', express.static(process.cwd() + '/font-awesome-4.5.0'));
+
+// Controllers
+app.use('/common', express.static(process.cwd() + '/app/common'));
+app.use('/controllers', express.static(process.cwd() + '/app/controllers'));
+app.use('/css', express.static(process.cwd() + '/views/css'));
+app.use('/js', express.static(process.cwd() + '/views/js'));
+
 // routes ======================================================================
 require('./app/routes.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
 // launch ======================================================================
-app.listen(port);
-console.log('The magic happens on port ' + port);
+app.listen(port, function() {
+  console.log('The magic happens on port ' + port);
+});

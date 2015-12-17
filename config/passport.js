@@ -1,10 +1,14 @@
 // config/passport.js
 
 // load all the things we need
-var LocalStrategy   = require('passport-local').Strategy;
+var LocalStrategy = require('passport-local').Strategy;
+var TwitterStrategy = require('passport-twitter').Strategy;
 
 // load up the user model
-var User            = require('../app/models/user');
+var User = require('../app/models/user');
+
+// change to env at some point
+//var configAuth = require('./auth');
 
 // expose this function to our app using module.exports
 module.exports = function(passport) {
@@ -40,7 +44,6 @@ module.exports = function(passport) {
         passReqToCallback : true // allows us to pass back the entire request to the callback
     },
     function(req, email, password, done) {
-
         // asynchronous
         // User.findOne wont fire unless data is sent back
         process.nextTick(function() {
@@ -59,11 +62,13 @@ module.exports = function(passport) {
 
                 // if there is no user with that email
                 // create the user
-                var newUser            = new User();
+                var newUser = new User();
 
                 // set the user's local credentials
-                newUser.local.email    = email;
+                newUser.local.email = email;
                 newUser.local.password = newUser.generateHash(password);
+                newUser.polls = 0;
+                newUser.maxPolls = 0;
 
                 // save the user
                 newUser.save(function(err) {
@@ -109,6 +114,41 @@ module.exports = function(passport) {
             return done(null, user);
         });
 
+    }));
+
+    // =========================================================================
+    // TWITTER =================================================================
+    // =========================================================================
+    passport.use(new TwitterStrategy({
+      consumerKey: process.env.TWITTER_consumerKey,
+      consumerSecret: process.env.TWITTER_consumerSecret,
+      callbackURL: process.env.TWITTER_callbackURL,
+      passReqToCallback: true
+    },
+    function(token, tokenSecret, profile, done) {
+      process.nextTick(function() {
+        User.findOne({'twitter.id': profile.id}, function(err, user) {
+          if (err)
+            return done(err);
+          if (user) {
+            return done(null, user);
+          } else {
+            var newUser = new User();
+            newUser.twitter.id = profile.id;
+            newUser.twitter.token = token;
+            newUser.twitter.username = profile.username;
+            newUser.twitter.displayName = profile.displayName;
+            newUser.polls = 0;
+            newUser.maxPolls = 0;
+
+            newUser.save(function(err) {
+              if (err)
+                throw err;
+              return done(null, newUser);
+            });
+          }
+        });
+      });
     }));
 
 };

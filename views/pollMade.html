@@ -1,0 +1,75 @@
+<!-- views/pollMade.html -->
+<!doctype html>
+<html>
+<head>
+    <title>Node Authentication</title>
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="/css/main.css">
+
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="/js/pollController.view.js"></script>
+</head>
+<body>
+
+<!-- Navigator bar -->
+<nav class="navbar navbar-default navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+
+      <ul class="collapse navbar-collapse nav navbar-nav navbar-left">
+        <li class="myNav" id="myNav"><a class="navbar-brand" href="#">VoteApp</a></li>
+      </ul>
+
+    </div>
+
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li id="myNav"><a href="/profile">Home</a></li>
+        <li id="myNav"><a href="#">Settings</a></li>
+        <li id="myNav"><a href="/logout">Logout</a></li>
+      </ul>
+    </div>
+
+  </div>
+</nav>
+<!-- Navigator bar end -->
+
+<div class="container">
+
+    <div class="page-header text-center">
+        <h1>Cast your vote!</h1>
+        <p class="share-link"></p>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6">
+          <div class="well">
+              <h3 class="poll-name"></h3>
+
+              <!-- POLL FORM -->
+              <form method="post" class="form">
+                  <div class="form-group">
+                      <label>Options</label>
+                  </div>
+                  <button type="submit" class="btn btn-warning btn-lg submit-btn">Submit</button>
+              </form>
+          </div>
+      </div>
+
+    </div>
+
+</div>
+<script type="text/javascript" src="/common/ajax-functions.js"></script>
+<script type="text/javascript" src="/controllers/pollVoteController.client.js"></script>
+</body>
+</html>
